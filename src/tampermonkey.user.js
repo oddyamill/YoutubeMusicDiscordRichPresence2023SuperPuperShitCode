@@ -7,7 +7,7 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=music.youtube.com
 // @downloadURL  https://github.com/oddyamill/YoutubeMusicDiscordRichPresence2023SuperPuperShitCode/raw/master/src/tampermonkey.user.js
 // @updateURL    https://github.com/oddyamill/YoutubeMusicDiscordRichPresence2023SuperPuperShitCode/raw/master/src/tampermonkey.user.js
-// @version      0.0.1
+// @version      0.0.2
 // ==/UserScript==
 
 (async function() {
@@ -40,7 +40,8 @@
 
       const metadata = navigator.mediaSession.metadata;
       if (metadata !== null) {
-        body.title = metadata.title;
+        // в metadata.title нету всяких там (feat govnoed 2000)
+        body.title = document.querySelector('.ytmusic-player-bar > .title')?.title || metadata.title;
         body.artist = metadata.artist;
         body.album = metadata.album || [...document.querySelectorAll('.byline a')].at(-1)?.textContent || undefined;
         body.artwork = metadata.artwork.at(-1)?.src;
