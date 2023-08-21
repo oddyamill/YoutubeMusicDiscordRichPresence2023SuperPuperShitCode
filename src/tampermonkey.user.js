@@ -58,6 +58,7 @@
 
   video.addEventListener('playing', listener);
   video.addEventListener('pause', listener);
+  video.addEventListener('durationchange', listener);
 
   if (video.src) {
     listener();
