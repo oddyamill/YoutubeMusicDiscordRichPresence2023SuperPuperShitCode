@@ -7,7 +7,7 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=music.youtube.com
 // @downloadURL  https://github.com/oddyamill/YoutubeMusicDiscordRichPresence2023SuperPuperShitCode/raw/master/src/tampermonkey.js
 // @updateURL    https://github.com/oddyamill/YoutubeMusicDiscordRichPresence2023SuperPuperShitCode/raw/master/src/tampermonkey.js
-// @version      0.0.0
+// @version      0.0.1
 // ==/UserScript==
 
 (async function() {
@@ -55,8 +55,7 @@
     });
   }
 
-  video.addEventListener('play', listener);
-  video.addEventListener('seeked', listener);
+  video.addEventListener('playing', listener);
   video.addEventListener('pause', listener);
 
   if (video.src) {
