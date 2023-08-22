@@ -7,7 +7,7 @@
 // @icon         https://www.google.com/s2/favicons?sz=64&domain=music.youtube.com
 // @downloadURL  https://github.com/oddyamill/YoutubeMusicDiscordRichPresence2023SuperPuperShitCode/raw/master/src/tampermonkey.user.js
 // @updateURL    https://github.com/oddyamill/YoutubeMusicDiscordRichPresence2023SuperPuperShitCode/raw/master/src/tampermonkey.user.js
-// @version      0.0.2
+// @version      0.0.3
 // ==/UserScript==
 
 (async function() {
@@ -32,20 +32,18 @@
     if (!video.paused) {
       const [current, end] = document.querySelector('#left-controls > span').textContent.trim().split(' / ');
 
-      body = {
-        id: document.querySelector('a.ytp-title-link.yt-uix-sessionlink').href.match(/v=([^&#]{5,})/)?.[1],
-        current: parse(current),
-        end: parse(end),
-      };
+      body.id = document.querySelector('a.ytp-title-link.yt-uix-sessionlink').href.match(/v=([^&#]{5,})/)?.[1];
+      body.current = parse(current);
+      body.end = parse(end);
 
       const metadata = navigator.mediaSession.metadata;
-      if (metadata !== null) {
-        // в metadata.title нету всяких там (feat govnoed 2000)
-        body.title = document.querySelector('.ytmusic-player-bar > .title')?.title || metadata.title;
-        body.artist = metadata.artist;
-        body.album = metadata.album || [...document.querySelectorAll('.byline a')].at(-1)?.textContent || undefined;
-        body.artwork = metadata.artwork.at(-1)?.src;
-      }
+      if (metadata === null) return;
+      
+      // в metadata.title нету всяких там (feat govnoed 2000)
+      body.title = document.querySelector('.ytmusic-player-bar > .title')?.title || metadata.title;
+      body.artist = metadata.artist;
+      body.album = metadata.album || [...document.querySelectorAll('.byline a')].at(-1)?.textContent || undefined;
+      body.artwork = metadata.artwork.at(-1)?.src;
     }
 
     return fetch('http://localhost:32484/', {
